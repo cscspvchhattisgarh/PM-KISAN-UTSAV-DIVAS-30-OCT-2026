@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PM-KISAN UTSAV DIVAS 30 OCT 2026</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f4f8; margin: 0; padding: 20px; }
+        .container { max-width: 550px; background: #ffffff; margin: auto; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #1e3c72; margin-bottom: 25px; font-size: 22px; border-bottom: 2px solid #1e3c72; padding-bottom: 10px; }
+        .form-group { margin-bottom: 18px; }
+        label { display: block; font-weight: 600; margin-bottom: 6px; color: #333; font-size: 14px; }
+        input, select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
+        input:focus, select:focus { border-color: #1e3c72; outline: none; }
+        .btn { width: 100%; background-color: #1e3c72; color: white; padding: 12px; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .btn:hover { background-color: #2a5298; }
+        .btn-secondary { background-color: #7f8c8d; margin-top: 5px; }
+        .btn-secondary:hover { background-color: #95a5a6; }
+        #step2 { display: none; } /* Pehle Step 2 chupa rahega */
+        #message { margin-top: 15px; text-align: center; font-weight: bold; }
+        .step-indicator { font-size: 12px; color: #666; text-align: right; margin-bottom: 10px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>PM-KISAN UTSAV DIVAS (30 OCT 2026)</h2>
+    
+    <form id="dataForm">
+        
+        <!-- STEP 1: LOCATION SELECTION -->
+        <div id="step1">
+            <div class="step-indicator">Step 1 of 2: Select Location</div>
+            
+            <div class="form-group">
+                <label>District Name / जिला:</label>
+                <select id="district" name="districtName" required>
+                    <option value="">Select District</option>
+                </select>
+                <input type="hidden" id="districtCode" name="districtCode">
+            </div>
+
+            <div class="form-group">
+                <label>Block Name / ब्लॉक:</label>
+                <select id="block" name="blockName" required disabled>
+                    <option value="">Select Block</option>
+                </select>
+                <input type="hidden" id="blockCode" name="blockCode">
+            </div>
+
+            <div class="form-group">
+                <label>Grampanchayat Name / ग्राम पंचायत:</label>
+                <select id="gp" name="gpName" required disabled>
+                    <option value="">Select Grampanchayat</option>
+                </select>
+                <input type="hidden" id="gpCode" name="gpCode">
+            </div>
+
+            <button type="button" class="btn" id="nextBtn" onclick="goToStep2()">Next &rarr;</button>
+        </div>
+
+        <!-- STEP 2: OTHER DETAILS -->
+        <div id="step2">
+            <div class="step-indicator">Step 2 of 2: VLE & Farmer Details</div>
+
+            <div class="form-group">
+                <label>CSC ID:</label>
+                <input type="text" name="cscId" required>
+            </div>
+
+            <div class="form-group">
+                <label>VLE Name:</label>
+                <input type="text" name="vleName" required>
+            </div>
+
+            <div class="form-group">
+                <label>Mobile Number:</label>
+                <input type="tel" name="mobile" pattern="[0-9]{10}" placeholder="10 Digits" required>
+            </div>
+
+            <div class="form-group">
+                <label>Mail ID:</label>
+                <input type="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label>इस कार्यक्रम में भाग लेने वाले अनुमानित किसानों की संख्या:</label>
+                <input type="number" name="farmersCount" min="0" placeholder="Estimated Farmers Count" required>
+            </div>
+
+            <button type="submit" class="btn" id="submitBtn">Submit Data</button>
+            <button type="button" class="btn btn-secondary" onclick="goToStep1()">&larr; Back to Location</button>
+        </div>
+
+    </form>
+    
+    <div id="message"></div>
+</div>
+
+<script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyY9wgDTwRsbAK4Hbhr4_Yq04JGekJLTYyCI3mDI_ObIb_LtFGrDhPZUAdOKYctn78kbg/exec"; // Apne Google App Script ka URL yahan Dalein
+
+    let districtsData = {}, blocksData = {}, gpsData = {};
+
+    // Load Districts on Page Load
+    window.onload = function() {
+        fetch(`${SCRIPT_URL}?action=getDistricts`)
+            .then(res => res.json())
+            .then(data => {
+                districtsData = data;
+                let distSelect = document.getElementById('district');
+                for (let dist in data) {
+                    distSelect.innerHTML += `<option value="${dist}">${dist}</option>`;
+                }
+            });
+    };
+
+    // On District Change
+    document.getElementById('district').addEventListener('change', function() {
+        let dist = this.value;
+        document.getElementById('districtCode').value = districtsData[dist] || '';
+        let blockSelect = document.getElementById('block');
+        let gpSelect = document.getElementById('gp');
+        
+        blockSelect.innerHTML = '<option value="">Select Block</option>';
+        gpSelect.innerHTML = '<option value="">Select Grampanchayat</option>';
+        gpSelect.disabled = true;
+
+        if (dist) {
+            blockSelect.disabled = false;
+            fetch(`${SCRIPT_URL}?action=getBlocks&district=${encodeURIComponent(dist)}`)
+                .then(res => res.json())
+                .then(data => {
+                    blocksData = data;
+                    for (let block in data) {
+                        blockSelect.innerHTML += `<option value="${block}">${block}</option>`;
+                    }
+                });
+        } else {
+            blockSelect.disabled = true;
+        }
+    });
+
+    // On Block Change
+    document.getElementById('block').addEventListener('change', function() {
+        let dist = document.getElementById('district').value;
+        let block = this.value;
+        document.getElementById('blockCode').value = blocksData[block] || '';
+        let gpSelect = document.getElementById('gp');
+        
+        gpSelect.innerHTML = '<option value="">Select Grampanchayat</option>';
+
+        if (block) {
+            gpSelect.disabled = false;
+            fetch(`${SCRIPT_URL}?action=getGPs&district=${encodeURIComponent(dist)}&block=${encodeURIComponent(block)}`)
+                .then(res => res.json())
+                .then(data => {
+                    gpsData = data;
+                    for (let gp in data) {
+                        gpSelect.innerHTML += `<option value="${gp}">${gp}</option>`;
+                    }
+                });
+        } else {
+            gpSelect.disabled = true;
+        }
+    });
+
+    // On GP Change
+    document.getElementById('gp').addEventListener('change', function() {
+        let gp = this.value;
+        document.getElementById('gpCode').value = gpsData[gp] || '';
+    });
+
+    // Step Navigation Functions
+    function goToStep2() {
+        let dist = document.getElementById('district').value;
+        let block = document.getElementById('block').value;
+        let gp = document.getElementById('gp').value;
+
+        if (!dist || !block || !gp) {
+            alert("Kripya pehle District, Block aur Gram Panchayat teeno select karein.");
+            return;
+        }
+
+        document.getElementById('step1').style.display = 'none';
+        document.getElementById('step2').style.display = 'block';
+    }
+
+    function goToStep1() {
+        document.getElementById('step2').style.display = 'none';
+        document.getElementById('step1').style.display = 'block';
+    }
+
+    // Submit Form
+    document.getElementById('dataForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        let btn = document.getElementById('submitBtn');
+        let msg = document.getElementById('message');
+        btn.disabled = true;
+        msg.innerText = "Submitting data...";
+
+        let formData = new FormData(this);
+        fetch(SCRIPT_URL, { method: 'POST', body: formData })
+            .then(res => res.json())
+            .then(response => {
+                if (response.result === 'success') {
+                    msg.style.color = 'green';
+                    msg.innerText = "Data successfully saved!";
+                    document.getElementById('dataForm').reset();
+                    goToStep1();
+                    document.getElementById('block').disabled = true;
+                    document.getElementById('gp').disabled = true;
+                } else {
+                    msg.style.color = 'red';
+                    msg.innerText = "Error saving data. Please try again.";
+                }
+                btn.disabled = false;
+            })
+            .catch(error => {
+                msg.style.color = 'red';
+                msg.innerText = "Network Error!";
+                btn.disabled = false;
+            });
+    });
+</script>
+
+</body>
+</html>
