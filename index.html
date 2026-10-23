@@ -4,91 +4,118 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PM-KISAN UTSAV DIVAS (30 OCT 2026)</title>
+    <!-- Google Fonts for Modern Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #0d6efd;
-            --primary-hover: #0b5ed7;
-            --bg-color: #f4f6f9;
+            --primary-gradient: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+            --bg-color: #f0f2f5;
             --card-bg: #ffffff;
-            --text-color: #212529;
-            --border-color: #ced4da;
+            --text-dark: #212529;
+            --text-muted: #6c757d;
+            --border-color: #dee2e6;
+            --focus-ring: rgba(13, 110, 253, 0.25);
             --error-color: #dc3545;
+            --success-color: #198754;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', system-ui, -apple-system, sans-serif;
         }
 
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-color);
+            color: var(--text-dark);
             margin: 0;
-            padding: 20px 10px;
+            padding: 20px 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
 
         .card {
-            max-width: 650px;
+            width: 100%;
+            max-width: 680px;
             background: var(--card-bg);
-            margin: auto;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            border-radius: 16px;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
             overflow: hidden;
-            border: 1px solid #e9ecef;
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .header {
-            background: linear-gradient(135deg, #0d6efd, #0a58ca);
+            background: var(--primary-gradient);
             color: white;
-            padding: 25px 20px;
+            padding: 30px 20px;
             text-align: center;
+            position: relative;
         }
 
         .header h2 {
             margin: 0;
-            font-size: 22px;
+            font-size: 24px;
+            font-weight: 700;
             letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
 
         .header p {
-            margin: 5px 0 0;
-            font-size: 13px;
+            margin: 8px 0 0;
+            font-size: 14px;
+            font-weight: 500;
             opacity: 0.9;
+            letter-spacing: 1px;
         }
 
         form {
-            padding: 25px;
+            padding: 30px 25px;
         }
 
         .section-title {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 700;
-            color: #6c757d;
+            color: #0d6efd;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #e9ecef;
-            padding-bottom: 5px;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background-color: var(--border-color);
         }
 
         .grid-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 18px;
         }
 
-        @media (max-width: 576px) {
+        @media (max-width: 600px) {
             .grid-container {
                 grid-template-columns: 1fr;
+            }
+            form {
+                padding: 20px 15px;
             }
         }
 
         .form-group {
-            margin-bottom: 15px;
-            position: relative;
+            margin-bottom: 18px;
         }
 
         .form-group.full-width {
             grid-column: span 2;
         }
 
-        @media (max-width: 576px) {
+        @media (max-width: 600px) {
             .form-group.full-width {
                 grid-column: span 1;
             }
@@ -97,67 +124,86 @@
         label {
             display: block;
             font-weight: 600;
-            margin-bottom: 6px;
-            font-size: 13px;
-            color: #495057;
+            margin-bottom: 8px;
+            font-size: 13.5px;
+            color: #343a40;
         }
 
         input, select {
             width: 100%;
-            padding: 10px 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            box-sizing: border-box;
+            padding: 12px 14px;
+            border: 1.5px solid var(--border-color);
+            border-radius: 8px;
             font-size: 14px;
-            transition: border-color 0.2s, box-shadow 0.2s;
+            color: var(--text-dark);
+            background-color: #fff;
+            transition: all 0.25s ease;
         }
 
         input[type="text"] {
             text-transform: uppercase;
         }
 
-        input.invalid, select.invalid {
-            border-color: var(--error-color) !important;
-            box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.15) !important;
+        input:hover, select:hover {
+            border-color: #adb5bd;
         }
 
         input:focus, select:focus {
-            border-color: var(--primary-color);
+            border-color: #0d6efd;
             outline: none;
-            box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+            box-shadow: 0 0 0 4px var(--focus-ring);
+        }
+
+        input.invalid, select.invalid {
+            border-color: var(--error-color) !important;
+            box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.15) !important;
+        }
+
+        input:disabled, select:disabled {
+            background-color: #f8f9fa;
+            cursor: not-allowed;
+            opacity: 0.7;
         }
 
         .error-msg {
             color: var(--error-color);
             font-size: 12px;
-            margin-top: 4px;
+            margin-top: 6px;
             display: none;
-            font-weight: 600;
+            font-weight: 500;
         }
 
         .submit-btn {
             width: 100%;
-            background-color: var(--primary-color);
+            background: var(--primary-gradient);
             color: white;
-            padding: 12px;
+            padding: 14px;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.2s;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
             margin-top: 10px;
+            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.25);
         }
 
         .submit-btn:hover {
-            background-color: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(13, 110, 253, 0.35);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
         }
 
         #message {
-            margin-top: 15px;
+            margin-top: 18px;
             text-align: center;
             font-size: 14px;
             font-weight: 600;
+            padding: 10px;
+            border-radius: 6px;
         }
     </style>
 </head>
@@ -166,12 +212,12 @@
 <div class="card">
     <div class="header">
         <h2>PM-KISAN UTSAV DIVAS</h2>
-        <p>30 OCTOBER 2026 — DATA COLLECTION FORM</p>
+        <p>30 OCTOBER 2026 — DATA COLLECTION</p>
     </div>
 
     <form id="dataForm" novalidate>
         <!-- Section 1: Location -->
-        <div class="section-title">1. Location Selection</div>
+        <div class="section-title">1. Location Details</div>
         <div class="grid-container">
             <div class="form-group full-width">
                 <label>District Name / जिला *</label>
@@ -192,7 +238,7 @@
             </div>
 
             <div class="form-group">
-                <label>Grampanchayat Name / ग्राम पंचायत *</label>
+                <label>Grampanchayat / ग्राम पंचायत *</label>
                 <select id="gp" name="gpName" required disabled>
                     <option value="">Select Grampanchayat</option>
                 </select>
@@ -202,11 +248,11 @@
         </div>
 
         <!-- Section 2: VLE Details -->
-        <div class="section-title" style="margin-top: 15px;">2. VLE Information</div>
+        <div class="section-title" style="margin-top: 10px;">2. VLE & Event Details</div>
         <div class="grid-container">
             <div class="form-group">
                 <label>CSC ID (12 Digits) *</label>
-                <input type="text" id="cscId" name="cscId" maxlength="12" placeholder="e.g. 123456780015" required>
+                <input type="text" id="cscId" name="cscId" maxlength="12" placeholder="Enter 12 Digit CSC ID" required>
                 <div class="error-msg" id="err-cscId">आपकी CSC ID गलत है</div>
             </div>
 
@@ -217,7 +263,7 @@
             </div>
 
             <div class="form-group">
-                <label>Mobile Number (10 Digits) *</label>
+                <label>Mobile Number *</label>
                 <input type="tel" id="mobile" name="mobile" maxlength="10" placeholder="10 Digit Mobile No." required>
                 <div class="error-msg" id="err-mobile">आपका मोबाईल नंबर गलत है</div>
             </div>
@@ -229,28 +275,28 @@
             </div>
 
             <div class="form-group full-width">
-                <label>अनुमानित किसानों की संख्या (Min: 10, Max: 200) *</label>
-                <input type="number" id="farmersCount" name="farmersCount" placeholder="Enter Farmers Count (10-200)" required>
+                <label>अनुमानित किसानों की संख्या (10-200) *</label>
+                <input type="number" id="farmersCount" name="farmersCount" placeholder="Enter Count (10 To 200)" required>
                 <div class="error-msg" id="err-farmersCount">फार्मर की संख्या कम से कम 10 और अधिक 200 होनी चाहिए</div>
             </div>
         </div>
 
-        <button type="submit" class="submit-btn" id="submitBtn">Submit Responses</button>
+        <button type="submit" class="submit-btn" id="submitBtn">Submit Data</button>
         <div id="message"></div>
     </form>
 </div>
 
 <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyY9wgDTwRsbAK4Hbhr4_Yq04JGekJLTYyCI3mDI_ObIb_LtFGrDhPZUAdOKYctn78kbg/exec"; // Apps Script Web App URL डालें
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyY9wgDTwRsbAK4Hbhr4_Yq04JGekJLTYyCI3mDI_ObIb_LtFGrDhPZUAdOKYctn78kbg/exec"; // Apps Script Web App URL yahan lagayein
 
     let masterData = {};
 
-    // Automatic uppercase for VLE Name
+    // Auto-uppercase VLE Name
     document.getElementById('vleName').addEventListener('input', function() {
         this.value = this.value.toUpperCase();
     });
 
-    // Clear Inline Errors on Input
+    // Clear Inline Error on User Input
     document.querySelectorAll('input, select').forEach(element => {
         element.addEventListener('input', function() {
             this.classList.remove('invalid');
@@ -259,7 +305,7 @@
         });
     });
 
-    // Load Data
+    // Load Master Data Fast
     window.onload = function() {
         fetch(`${SCRIPT_URL}?action=getHierarchy`)
             .then(res => res.json())
@@ -276,7 +322,7 @@
             });
     };
 
-    // Dropdown Handlers
+    // Dropdown Dynamic Handlers
     document.getElementById('district').addEventListener('change', function() {
         let dist = this.value;
         let blockSelect = document.getElementById('block');
@@ -323,7 +369,6 @@
         }
     });
 
-    // Helper Function to Show Error
     function setError(id, msg) {
         let inputElem = document.getElementById(id);
         let errElem = document.getElementById('err-' + id);
@@ -339,7 +384,7 @@
         e.preventDefault();
         let isValid = true;
 
-        // Reset Errors
+        // Reset All Errors
         document.querySelectorAll('.error-msg').forEach(e => e.style.display = 'none');
         document.querySelectorAll('.invalid').forEach(e => e.classList.remove('invalid'));
 
@@ -352,12 +397,12 @@
         let email = document.getElementById('email').value.trim();
         let farmersCount = document.getElementById('farmersCount').value.trim();
 
-        // 1. Dropdown Checks
+        // 1. Dropdowns
         if (!district) { setError('district'); isValid = false; }
         if (!block) { setError('block'); isValid = false; }
         if (!gp) { setError('gp'); isValid = false; }
 
-        // 2. CSC ID Check (12 Digits, 9th & 10th = 00, 11th = 1, 12th = 1-9)
+        // 2. CSC ID Check
         let cscRegex = /^\d{8}001[1-9]$/;
         if (!cscRegex.test(cscId)) {
             setError('cscId', 'आपकी CSC ID गलत है');
@@ -371,7 +416,7 @@
             isValid = false;
         }
 
-        // 4. Mobile Number Check
+        // 4. Mobile Check
         let mobileRegex = /^[6-9]\d{9}$/;
         if (!mobileRegex.test(mobile)) {
             setError('mobile', 'आपका मोबाईल नंबर गलत है');
@@ -385,7 +430,7 @@
             isValid = false;
         }
 
-        // 6. Farmers Count Check (Min: 10, Max: 200)
+        // 6. Farmers Count Check (10 - 200)
         let countNum = parseInt(farmersCount, 10);
         if (isNaN(countNum) || countNum < 10 || countNum > 200) {
             setError('farmersCount', 'फार्मर की संख्या कम से कम 10 और अधिक 200 होनी चाहिए');
@@ -394,33 +439,37 @@
 
         if (!isValid) return;
 
-        // Submit Code
+        // Submit Process
         let btn = document.getElementById('submitBtn');
         let msg = document.getElementById('message');
 
         btn.disabled = true;
+        msg.style.backgroundColor = '#e7f1ff';
         msg.style.color = '#0d6efd';
-        msg.innerText = "Submitting data...";
+        msg.innerText = "Submitting Data, Please Wait...";
 
         let formData = new FormData(this);
         fetch(SCRIPT_URL, { method: 'POST', body: formData })
             .then(res => res.json())
             .then(response => {
                 if (response.result === 'success') {
-                    msg.style.color = '#198754';
-                    msg.innerText = "Data successfully saved!";
+                    msg.style.backgroundColor = '#d1e7dd';
+                    msg.style.color = '#0f5132';
+                    msg.innerText = "✓ Data Successfully Saved!";
                     document.getElementById('dataForm').reset();
                     document.getElementById('block').disabled = true;
                     document.getElementById('gp').disabled = true;
                 } else {
-                    msg.style.color = '#dc3545';
-                    msg.innerText = "Error saving data. Try again.";
+                    msg.style.backgroundColor = '#f8d7da';
+                    msg.style.color = '#842029';
+                    msg.innerText = "Error saving data. Please try again.";
                 }
                 btn.disabled = false;
             })
             .catch(error => {
-                msg.style.color = '#dc3545';
-                msg.innerText = "Network Error!";
+                msg.style.backgroundColor = '#f8d7da';
+                msg.style.color = '#842029';
+                msg.innerText = "Network Error! Check Internet Connection.";
                 btn.disabled = false;
             });
     });
