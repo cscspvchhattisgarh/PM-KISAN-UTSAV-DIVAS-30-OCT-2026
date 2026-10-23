@@ -63,14 +63,69 @@
 
         .header p {
             margin: 8px 0 0;
-            font-size: 14px;
-            font-weight: 500;
-            opacity: 0.9;
+            font-size: 15px;
+            font-weight: 600;
+            opacity: 0.95;
             letter-spacing: 1px;
         }
 
+        /* QUICK LINKS SECTION STYLING */
+        .links-container {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            padding: 16px;
+            margin: 20px 25px 0 25px;
+        }
+
+        .links-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0a58ca;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .link-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #ffffff;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .link-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .link-item:hover {
+            border-color: #0d6efd;
+            box-shadow: 0 2px 8px rgba(13, 110, 253, 0.1);
+        }
+
+        .link-item a {
+            color: #0d6efd;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .link-item a:hover {
+            text-decoration: underline;
+        }
+
         form {
-            padding: 30px 25px;
+            padding: 25px;
         }
 
         .section-title {
@@ -104,6 +159,14 @@
             }
             form {
                 padding: 20px 15px;
+            }
+            .links-container {
+                margin: 15px 15px 0 15px;
+            }
+            .link-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
             }
         }
 
@@ -210,9 +273,35 @@
 <body>
 
 <div class="card">
+    <!-- FORM HEADER -->
     <div class="header">
         <h2>PM-KISAN UTSAV DIVAS</h2>
-        <p>30 OCTOBER 2026 — DATA COLLECTION</p>
+        <p>30 OCTOBER 2026</p>
+    </div>
+
+    <!-- QUICK LINKS SECTION -->
+    <div class="links-container">
+        <div class="links-title">📌 आवश्यक लिंक्स (Important Links)</div>
+        
+        <div class="link-item">
+            <span>1. लाइव इवेंट लिंक (Webcast)</span>
+            <a href="https://pmindiawebcast.nic.in/" target="_blank">यहाँ क्लिक करें &rarr;</a>
+        </div>
+
+        <div class="link-item">
+            <span>2. मोबाइल ऐप यूजर मैनुअल (PDF)</span>
+            <a href="https://drive.google.com/file/d/1MGDaLNR0TD9UvOyo37Yq-ILqQ1XvsHkS/view?usp=sharing" target="_blank">PDF देखें &rarr;</a>
+        </div>
+
+        <div class="link-item">
+            <span>3. मोबाइल ऐप यूजर मैनुअल (Video)</span>
+            <a href="https://drive.google.com/file/d/1MOdDtcJOQq6nu_QOIUkfuliuKG1YFUYi/view?usp=sharing" target="_blank">वीडियो देखें &rarr;</a>
+        </div>
+
+        <div class="link-item">
+            <span>4. EPCS मोबाइल ऐप डाउनलोड (APK)</span>
+            <a href="https://play.google.com/store/apps/details?id=com.nic.epcs&pcampaignid=web_share" target="_blank">App डाउनलोड करें &rarr;</a>
+        </div>
     </div>
 
     <form id="dataForm" novalidate>
