@@ -258,4 +258,397 @@
         label {
             display: block;
             font-weight: 600;
-            margin
+            margin-bottom: 8px;
+            font-size: 13.5px;
+            color: #343a40;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            color: var(--text-dark);
+            background-color: #fff;
+            transition: all 0.25s ease;
+        }
+
+        input[type="text"] {
+            text-transform: uppercase;
+        }
+
+        input:hover, select:hover {
+            border-color: #adb5bd;
+        }
+
+        input:focus, select:focus {
+            border-color: #0d6efd;
+            outline: none;
+            box-shadow: 0 0 0 4px var(--focus-ring);
+        }
+
+        input.invalid, select.invalid {
+            border-color: var(--error-color) !important;
+            box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.15) !important;
+        }
+
+        input:disabled, select:disabled {
+            background-color: #f8f9fa;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .error-msg {
+            color: var(--error-color);
+            font-size: 12px;
+            margin-top: 6px;
+            display: none;
+            font-weight: 500;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: var(--primary-gradient);
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-top: 10px;
+            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.25);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(13, 110, 253, 0.35);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        #message {
+            margin-top: 18px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 10px;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- WELCOME POP-UP MODAL -->
+<div class="welcome-modal-overlay" id="welcomeModal">
+    <div class="welcome-modal-box">
+        <div class="welcome-icon">📢</div>
+        <h3>महत्वपूर्ण सूचना</h3>
+        <p>इस कार्यक्रम में हिस्सा लेने हेतु इच्छुक VLE ही कृपया नीचे दिए गए फॉर्म में अपनी जानकारी दर्ज करें।</p>
+        <button class="welcome-close-btn" onclick="closeWelcomeModal()">फॉर्म भरें &rarr;</button>
+    </div>
+</div>
+
+<div class="card">
+    <!-- FORM HEADER -->
+    <div class="header">
+        <h2>PM-KISAN UTSAV DIVAS</h2>
+        <p>30 OCTOBER 2026</p>
+    </div>
+
+    <!-- QUICK LINKS SECTION -->
+    <div class="links-container">
+        <div class="links-title">📌 आवश्यक लिंक्स (Important Links)</div>
+        
+        <div class="link-item">
+            <span>1. लाइव इवेंट लिंक (Webcast)</span>
+            <a href="https://pmindiawebcast.nic.in/" target="_blank">यहाँ क्लिक करें &rarr;</a>
+        </div>
+
+        <div class="link-item">
+            <span>2. मोबाइल ऐप यूजर मैनुअल (PDF)</span>
+            <a href="https://drive.google.com/file/d/1MGDaLNR0TD9UvOyo37Yq-ILqQ1XvsHkS/view?usp=sharing" target="_blank">PDF देखें &rarr;</a>
+        </div>
+
+        <div class="link-item">
+            <span>3. मोबाइल ऐप यूजर मैनुअल (Video)</span>
+            <a href="https://drive.google.com/file/d/1MOdDtcJOQq6nu_QOIUkfuliuKG1YFUYi/view?usp=sharing" target="_blank">वीडियो देखें &rarr;</a>
+        </div>
+
+        <div class="link-item">
+            <span>4. EPCS मोबाइल ऐप डाउनलोड (APK)</span>
+            <a href="https://play.google.com/store/apps/details?id=com.nic.epcs&pcampaignid=web_share" target="_blank">App डाउनलोड करें &rarr;</a>
+        </div>
+    </div>
+
+    <form id="dataForm" novalidate>
+        <!-- Section 1: Location -->
+        <div class="section-title">1. Location Details</div>
+        <div class="grid-container">
+            <div class="form-group full-width">
+                <label>District Name / जिला *</label>
+                <select id="district" name="districtName" required>
+                    <option value="">Loading Data...</option>
+                </select>
+                <div class="error-msg" id="err-district">कृपया जिला चुनें।</div>
+                <input type="hidden" id="districtCode" name="districtCode">
+            </div>
+
+            <div class="form-group">
+                <label>Block Name / ब्लॉक *</label>
+                <select id="block" name="blockName" required disabled>
+                    <option value="">Select Block</option>
+                </select>
+                <div class="error-msg" id="err-block">कृपया ब्लॉक चुनें।</div>
+                <input type="hidden" id="blockCode" name="blockCode">
+            </div>
+
+            <div class="form-group">
+                <label>Grampanchayat / ग्राम पंचायत *</label>
+                <select id="gp" name="gpName" required disabled>
+                    <option value="">Select Grampanchayat</option>
+                </select>
+                <div class="error-msg" id="err-gp">कृपया ग्राम पंचायत चुनें।</div>
+                <input type="hidden" id="gpCode" name="gpCode">
+            </div>
+        </div>
+
+        <!-- Section 2: VLE Details -->
+        <div class="section-title" style="margin-top: 10px;">2. VLE & Event Details</div>
+        <div class="grid-container">
+            <div class="form-group">
+                <label>CSC ID (12 Digits) *</label>
+                <input type="text" id="cscId" name="cscId" maxlength="12" placeholder="Enter 12 Digit CSC ID" required>
+                <div class="error-msg" id="err-cscId">आपकी CSC ID गलत है</div>
+            </div>
+
+            <div class="form-group">
+                <label>VLE Name *</label>
+                <input type="text" id="vleName" name="vleName" placeholder="ENTER FULL NAME" required>
+                <div class="error-msg" id="err-vleName">आपका VLE नाम गलत है</div>
+            </div>
+
+            <div class="form-group">
+                <label>Mobile Number *</label>
+                <input type="tel" id="mobile" name="mobile" maxlength="10" placeholder="10 Digit Mobile No." required>
+                <div class="error-msg" id="err-mobile">आपका मोबाईल नंबर गलत है</div>
+            </div>
+
+            <div class="form-group">
+                <label>Email ID *</label>
+                <input type="email" id="email" name="email" placeholder="example@domain.com" required>
+                <div class="error-msg" id="err-email">आपकी मेल आईडी गलत है</div>
+            </div>
+
+            <div class="form-group full-width">
+                <label>अनुमानित किसानों की संख्या (10-200) *</label>
+                <input type="number" id="farmersCount" name="farmersCount" placeholder="Enter Count (10 To 200)" required>
+                <div class="error-msg" id="err-farmersCount">फार्मर की संख्या कम से कम 10 और अधिक 200 होनी चाहिए</div>
+            </div>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submitBtn">Submit Data</button>
+        <div id="message"></div>
+    </form>
+</div>
+
+<script>
+    const SCRIPT_URL = "YOUR_SCRIPT_URL_HERE"; // Apps Script Web App URL yahan lagayein
+
+    let masterData = {};
+
+    // Function to Close Welcome Modal
+    function closeWelcomeModal() {
+        document.getElementById('welcomeModal').style.display = 'none';
+    }
+
+    // Auto-uppercase VLE Name
+    document.getElementById('vleName').addEventListener('input', function() {
+        this.value = this.value.toUpperCase();
+    });
+
+    // Clear Inline Error on User Input
+    document.querySelectorAll('input, select').forEach(element => {
+        element.addEventListener('input', function() {
+            this.classList.remove('invalid');
+            let errDiv = document.getElementById('err-' + this.id);
+            if (errDiv) errDiv.style.display = 'none';
+        });
+    });
+
+    // Load Master Data Fast
+    window.onload = function() {
+        fetch(`${SCRIPT_URL}?action=getHierarchy`)
+            .then(res => res.json())
+            .then(data => {
+                masterData = data;
+                let distSelect = document.getElementById('district');
+                distSelect.innerHTML = '<option value="">Select District</option>';
+                for (let dist in data) {
+                    distSelect.innerHTML += `<option value="${dist}">${dist}</option>`;
+                }
+            })
+            .catch(err => {
+                console.error("Data load error:", err);
+            });
+    };
+
+    // Dropdown Dynamic Handlers
+    document.getElementById('district').addEventListener('change', function() {
+        let dist = this.value;
+        let blockSelect = document.getElementById('block');
+        let gpSelect = document.getElementById('gp');
+
+        blockSelect.innerHTML = '<option value="">Select Block</option>';
+        gpSelect.innerHTML = '<option value="">Select Grampanchayat</option>';
+        gpSelect.disabled = true;
+
+        if (dist && masterData[dist]) {
+            document.getElementById('districtCode').value = masterData[dist].code || '';
+            blockSelect.disabled = false;
+            let blocks = masterData[dist].blocks;
+            for (let block in blocks) {
+                blockSelect.innerHTML += `<option value="${block}">${block}</option>`;
+            }
+        }
+    });
+
+    document.getElementById('block').addEventListener('change', function() {
+        let dist = document.getElementById('district').value;
+        let block = this.value;
+        let gpSelect = document.getElementById('gp');
+
+        gpSelect.innerHTML = '<option value="">Select Grampanchayat</option>';
+
+        if (dist && block && masterData[dist].blocks[block]) {
+            document.getElementById('blockCode').value = masterData[dist].blocks[block].code || '';
+            gpSelect.disabled = false;
+            let gps = masterData[dist].blocks[block].gps;
+            for (let gp in gps) {
+                gpSelect.innerHTML += `<option value="${gp}">${gp}</option>`;
+            }
+        }
+    });
+
+    document.getElementById('gp').addEventListener('change', function() {
+        let dist = document.getElementById('district').value;
+        let block = document.getElementById('block').value;
+        let gp = this.value;
+
+        if (dist && block && gp && masterData[dist].blocks[block].gps[gp]) {
+            document.getElementById('gpCode').value = masterData[dist].blocks[block].gps[gp] || '';
+        }
+    });
+
+    function setError(id, msg) {
+        let inputElem = document.getElementById(id);
+        let errElem = document.getElementById('err-' + id);
+        if (inputElem) inputElem.classList.add('invalid');
+        if (errElem) {
+            if (msg) errElem.innerText = msg;
+            errElem.style.display = 'block';
+        }
+    }
+
+    // FORM VALIDATION & SUBMIT
+    document.getElementById('dataForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        let isValid = true;
+
+        // Reset All Errors
+        document.querySelectorAll('.error-msg').forEach(e => e.style.display = 'none');
+        document.querySelectorAll('.invalid').forEach(e => e.classList.remove('invalid'));
+
+        let district = document.getElementById('district').value;
+        let block = document.getElementById('block').value;
+        let gp = document.getElementById('gp').value;
+        let cscId = document.getElementById('cscId').value.trim();
+        let vleName = document.getElementById('vleName').value.trim();
+        let mobile = document.getElementById('mobile').value.trim();
+        let email = document.getElementById('email').value.trim();
+        let farmersCount = document.getElementById('farmersCount').value.trim();
+
+        // 1. Dropdowns
+        if (!district) { setError('district'); isValid = false; }
+        if (!block) { setError('block'); isValid = false; }
+        if (!gp) { setError('gp'); isValid = false; }
+
+        // 2. CSC ID Check
+        let cscRegex = /^\d{8}001[1-9]$/;
+        if (!cscRegex.test(cscId)) {
+            setError('cscId', 'आपकी CSC ID गलत है');
+            isValid = false;
+        }
+
+        // 3. VLE Name Check
+        let nameRegex = /^[A-Za-z\s]+$/;
+        if (!vleName || !nameRegex.test(vleName)) {
+            setError('vleName', 'आपका VLE नाम गलत है');
+            isValid = false;
+        }
+
+        // 4. Mobile Check
+        let mobileRegex = /^[6-9]\d{9}$/;
+        if (!mobileRegex.test(mobile)) {
+            setError('mobile', 'आपका मोबाईल नंबर गलत है');
+            isValid = false;
+        }
+
+        // 5. Email Check
+        let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailRegex.test(email)) {
+            setError('email', 'आपकी मेल आईडी गलत है');
+            isValid = false;
+        }
+
+        // 6. Farmers Count Check (10 - 200)
+        let countNum = parseInt(farmersCount, 10);
+        if (isNaN(countNum) || countNum < 10 || countNum > 200) {
+            setError('farmersCount', 'फार्मर की संख्या कम से कम 10 और अधिक 200 होनी चाहिए');
+            isValid = false;
+        }
+
+        if (!isValid) return;
+
+        // Submit Process
+        let btn = document.getElementById('submitBtn');
+        let msg = document.getElementById('message');
+
+        btn.disabled = true;
+        msg.style.backgroundColor = '#e7f1ff';
+        msg.style.color = '#0d6efd';
+        msg.innerText = "Submitting Data, Please Wait...";
+
+        let formData = new FormData(this);
+        fetch(SCRIPT_URL, { method: 'POST', body: formData })
+            .then(res => res.json())
+            .then(response => {
+                if (response.result === 'success') {
+                    msg.style.backgroundColor = '#d1e7dd';
+                    msg.style.color = '#0f5132';
+                    msg.innerText = "✓ Data Successfully Saved!";
+                    document.getElementById('dataForm').reset();
+                    document.getElementById('block').disabled = true;
+                    document.getElementById('gp').disabled = true;
+                } else {
+                    msg.style.backgroundColor = '#f8d7da';
+                    msg.style.color = '#842029';
+                    msg.innerText = "Error saving data. Please try again.";
+                }
+                btn.disabled = false;
+            })
+            .catch(error => {
+                msg.style.backgroundColor = '#f8d7da';
+                msg.style.color = '#842029';
+                msg.innerText = "Network Error! Check Internet Connection.";
+                btn.disabled = false;
+            });
+    });
+</script>
+
+</body>
+</html>
