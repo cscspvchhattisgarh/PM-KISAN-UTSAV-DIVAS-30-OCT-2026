@@ -577,12 +577,12 @@
         if (!block) { setError('block'); isValid = false; }
         if (!gp) { setError('gp'); isValid = false; }
 
-        // 2. CSC ID Check
-        let cscRegex = /^\d{8}001[0-9]$/;
-        if (!cscRegex.test(cscId)) {
-            setError('cscId', 'आपकी CSC ID गलत है');
-            isValid = false;
-        }
+        // 2. CSC ID Check (12 Digits, 9th & 10th = 00, 11th = 1, 12th = 0-9)
+let cscRegex = /^\d{8}001[0-9]$/;
+if (!cscRegex.test(cscId)) {
+    setError('cscId', 'आपकी CSC ID गलत है');
+    isValid = false;
+}
 
         // 3. VLE Name Check
         let nameRegex = /^[A-Za-z\s]+$/;
