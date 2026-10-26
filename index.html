@@ -578,7 +578,7 @@
         if (!gp) { setError('gp'); isValid = false; }
 
         // 2. CSC ID Check
-        let cscRegex = /^\d{8}001[1-9]$/;
+        let cscRegex = /^\d{8}001[0-9]$/;
         if (!cscRegex.test(cscId)) {
             setError('cscId', 'आपकी CSC ID गलत है');
             isValid = false;
