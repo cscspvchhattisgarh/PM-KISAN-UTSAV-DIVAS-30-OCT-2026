@@ -69,6 +69,77 @@
             letter-spacing: 1px;
         }
 
+        /* WELCOME POPUP STYLING */
+        .welcome-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            padding: 15px;
+        }
+
+        .welcome-modal-box {
+            background: #ffffff;
+            border-radius: 16px;
+            max-width: 450px;
+            width: 100%;
+            padding: 30px 25px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: modalFadeIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-top: 6px solid #0d6efd;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.85); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .welcome-icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .welcome-modal-box h3 {
+            margin: 0 0 12px 0;
+            color: #0d6efd;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .welcome-modal-box p {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #333;
+            margin: 0 0 24px 0;
+            font-weight: 500;
+        }
+
+        .welcome-close-btn {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .welcome-close-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(13, 110, 253, 0.4);
+        }
+
         /* QUICK LINKS SECTION STYLING */
         .links-container {
             background-color: #f8f9fa;
@@ -187,498 +258,4 @@
         label {
             display: block;
             font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 13.5px;
-            color: #343a40;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 12px 14px;
-            border: 1.5px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 14px;
-            color: var(--text-dark);
-            background-color: #fff;
-            transition: all 0.25s ease;
-        }
-
-        input[type="text"] {
-            text-transform: uppercase;
-        }
-
-        input:hover, select:hover {
-            border-color: #adb5bd;
-        }
-
-        input:focus, select:focus {
-            border-color: #0d6efd;
-            outline: none;
-            box-shadow: 0 0 0 4px var(--focus-ring);
-        }
-
-        input.invalid, select.invalid {
-            border-color: var(--error-color) !important;
-            box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.15) !important;
-        }
-
-        input:disabled, select:disabled {
-            background-color: #f8f9fa;
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-
-        .error-msg {
-            color: var(--error-color);
-            font-size: 12px;
-            margin-top: 6px;
-            display: none;
-            font-weight: 500;
-        }
-
-        .submit-btn {
-            width: 100%;
-            background: var(--primary-gradient);
-            color: white;
-            padding: 14px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            margin-top: 10px;
-            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.25);
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 16px rgba(13, 110, 253, 0.35);
-        }
-
-        .submit-btn:active {
-            transform: translateY(0);
-        }
-
-        #message {
-            margin-top: 18px;
-            text-align: center;
-            font-size: 14px;
-            font-weight: 600;
-            padding: 10px;
-            border-radius: 6px;
-        }
-
-        /* WELCOME POPUP MODAL STYLING */
-        .info-modal-overlay {
-            display: flex;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.65);
-            backdrop-filter: blur(4px);
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            padding: 15px;
-        }
-
-        .info-modal-card {
-            background: #ffffff;
-            border-radius: 16px;
-            max-width: 520px;
-            width: 100%;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
-            animation: modalFadeIn 0.3s ease-out;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        @keyframes modalFadeIn {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        .info-modal-header {
-            background: #dc3545;
-            color: white;
-            padding: 16px 20px;
-            font-size: 18px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .info-modal-body {
-            padding: 20px;
-            font-size: 13.5px;
-            line-height: 1.6;
-            color: #333;
-            max-height: 70vh;
-            overflow-y: auto;
-        }
-
-        .info-modal-body p {
-            margin-top: 0;
-            margin-bottom: 12px;
-        }
-
-        .info-modal-body ul {
-            padding-left: 20px;
-            margin-bottom: 15px;
-        }
-
-        .info-modal-body li {
-            margin-bottom: 8px;
-        }
-
-        .info-modal-footer {
-            padding: 12px 20px 20px 20px;
-            text-align: center;
-            background: #f8f9fa;
-            border-top: 1px solid #e9ecef;
-        }
-
-        .close-popup-btn {
-            background: var(--primary-gradient);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.2);
-            transition: all 0.2s ease;
-        }
-
-        .close-popup-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 16px rgba(13, 110, 253, 0.3);
-        }
-    </style>
-</head>
-<body>
-
-<!-- WELCOME ANNOUNCEMENT POP-UP MODAL -->
-<div class="info-modal-overlay" id="welcomeModal">
-    <div class="info-modal-card">
-        <div class="info-modal-header">
-            📢 ज़रूरी सूचना | प्रिय VLE साथियों
-        </div>
-        <div class="info-modal-body">
-            <p>PM-KISAN योजना की 24वीं किस्त दिनांक <strong>30 अक्टूबर 2026</strong> को माननीय प्रधानमंत्री जी द्वारा बनासकांठा (गुजरात) से जारी की जाएगी।</p>
-            <p>कार्यक्रम को सफल बनाने के लिए आप सभी से निम्नलिखित अनुरोध है:</p>
-            <ul>
-                <li><strong>किसानों को आमंत्रित करें:</strong> अपने CSC केंद्र पर कम से कम 25 किसानों को आमंत्रित करें ताकि वे इस कार्यक्रम का लाइव प्रसारण देख सकें।</li>
-                <li><strong>उपस्थिति दर्ज करें (EPCS App):</strong> अपने केंद्र पर उपस्थित किसानों की संख्या दर्ज करने के लिए Event Participants Count System (EPCS) ऐप का उपयोग अवश्य करें।</li>
-            </ul>
-            <p>आप सभी VLE साथियों से अनुरोध है कि इस संदेश और यूजर मैनुअल को अपने-अपने ज़िला VLE व्हाट्सएप ग्रुपों में तुरंत साझा करें, ताकि अधिक से अधिक किसानों की भागीदारी सुनिश्चित हो सके।</p>
-            <p style="margin-bottom: 0;"><strong>धन्यवाद!</strong></p>
-        </div>
-        <div class="info-modal-footer">
-            <button class="close-popup-btn" onclick="closeNoticePopup()">आगे बढ़ें (Proceed to Form) &rarr;</button>
-        </div>
-    </div>
-</div>
-
-<div class="card">
-    <!-- FORM HEADER -->
-    <div class="header">
-        <h2>PM-KISAN UTSAV DIVAS</h2>
-        <p>30 OCTOBER 2026</p>
-    </div>
-
-    <!-- QUICK LINKS SECTION -->
-    <div class="links-container">
-        <div class="links-title">📌 आवश्यक लिंक्स (Important Links)</div>
-        
-        <div class="link-item">
-            <span>1. लाइव इवेंट लिंक (Webcast)</span>
-            <a href="https://pmindiawebcast.nic.in/" target="_blank">यहाँ क्लिक करें &rarr;</a>
-        </div>
-
-        <div class="link-item">
-            <span>2. मोबाइल ऐप यूजर मैनुअल (PDF)</span>
-            <a href="https://drive.google.com/file/d/1MGDaLNR0TD9UvOyo37Yq-ILqQ1XvsHkS/view?usp=sharing" target="_blank">PDF देखें &rarr;</a>
-        </div>
-
-        <div class="link-item">
-            <span>3. मोबाइल ऐप यूजर मैनुअल (Video)</span>
-            <a href="https://drive.google.com/file/d/1MOdDtcJOQq6nu_QOIUkfuliuKG1YFUYi/view?usp=sharing" target="_blank">वीडियो देखें &rarr;</a>
-        </div>
-
-        <div class="link-item">
-            <span>4. EPCS मोबाइल ऐप डाउनलोड (APK)</span>
-            <a href="https://play.google.com/store/apps/details?id=com.nic.epcs&pcampaignid=web_share" target="_blank">App डाउनलोड करें &rarr;</a>
-        </div>
-    </div>
-
-    <form id="dataForm" novalidate>
-        <!-- Section 1: Location -->
-        <div class="section-title">1. Location Details</div>
-        <div class="grid-container">
-            <div class="form-group full-width">
-                <label>District Name / जिला *</label>
-                <select id="district" name="districtName" required>
-                    <option value="">Loading Data...</option>
-                </select>
-                <div class="error-msg" id="err-district">कृपया जिला चुनें।</div>
-                <input type="hidden" id="districtCode" name="districtCode">
-            </div>
-
-            <div class="form-group">
-                <label>Block Name / ब्लॉक *</label>
-                <select id="block" name="blockName" required disabled>
-                    <option value="">Select Block</option>
-                </select>
-                <div class="error-msg" id="err-block">कृपया ब्लॉक चुनें।</div>
-                <input type="hidden" id="blockCode" name="blockCode">
-            </div>
-
-            <div class="form-group">
-                <label>Grampanchayat / ग्राम पंचायत *</label>
-                <select id="gp" name="gpName" required disabled>
-                    <option value="">Select Grampanchayat</option>
-                </select>
-                <div class="error-msg" id="err-gp">कृपया ग्राम पंचायत चुनें।</div>
-                <input type="hidden" id="gpCode" name="gpCode">
-            </div>
-        </div>
-
-        <!-- Section 2: VLE Details -->
-        <div class="section-title" style="margin-top: 10px;">2. VLE & Event Details</div>
-        <div class="grid-container">
-            <div class="form-group">
-                <label>CSC ID (12 Digits) *</label>
-                <input type="text" id="cscId" name="cscId" maxlength="12" placeholder="Enter 12 Digit CSC ID" required>
-                <div class="error-msg" id="err-cscId">आपकी CSC ID गलत है</div>
-            </div>
-
-            <div class="form-group">
-                <label>VLE Name *</label>
-                <input type="text" id="vleName" name="vleName" placeholder="ENTER FULL NAME" required>
-                <div class="error-msg" id="err-vleName">आपका VLE नाम गलत है</div>
-            </div>
-
-            <div class="form-group">
-                <label>Mobile Number *</label>
-                <input type="tel" id="mobile" name="mobile" maxlength="10" placeholder="10 Digit Mobile No." required>
-                <div class="error-msg" id="err-mobile">आपका मोबाईल नंबर गलत है</div>
-            </div>
-
-            <div class="form-group">
-                <label>Email ID *</label>
-                <input type="email" id="email" name="email" placeholder="example@domain.com" required>
-                <div class="error-msg" id="err-email">आपकी मेल आईडी गलत है</div>
-            </div>
-
-            <div class="form-group full-width">
-                <label>अनुमानित किसानों की संख्या (10-200) *</label>
-                <input type="number" id="farmersCount" name="farmersCount" placeholder="Enter Count (10 To 200)" required>
-                <div class="error-msg" id="err-farmersCount">फार्मर की संख्या कम से कम 10 और अधिक 200 होनी चाहिए</div>
-            </div>
-        </div>
-
-        <button type="submit" class="submit-btn" id="submitBtn">Submit Data</button>
-        <div id="message"></div>
-    </form>
-</div>
-
-<script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyY9wgDTwRsbAK4Hbhr4_Yq04JGekJLTYyCI3mDI_ObIb_LtFGrDhPZUAdOKYctn78kbg/exec"; // Apps Script Web App URL yahan lagayein
-
-    let masterData = {};
-
-    // Close Notice Pop-up Modal Function
-    function closeNoticePopup() {
-        document.getElementById('welcomeModal').style.display = 'none';
-    }
-
-    // Auto-uppercase VLE Name
-    document.getElementById('vleName').addEventListener('input', function() {
-        this.value = this.value.toUpperCase();
-    });
-
-    // Clear Inline Error on User Input
-    document.querySelectorAll('input, select').forEach(element => {
-        element.addEventListener('input', function() {
-            this.classList.remove('invalid');
-            let errDiv = document.getElementById('err-' + this.id);
-            if (errDiv) errDiv.style.display = 'none';
-        });
-    });
-
-    // Load Master Data Fast
-    window.onload = function() {
-        fetch(`${SCRIPT_URL}?action=getHierarchy`)
-            .then(res => res.json())
-            .then(data => {
-                masterData = data;
-                let distSelect = document.getElementById('district');
-                distSelect.innerHTML = '<option value="">Select District</option>';
-                for (let dist in data) {
-                    distSelect.innerHTML += `<option value="${dist}">${dist}</option>`;
-                }
-            })
-            .catch(err => {
-                console.error("Data load error:", err);
-            });
-    };
-
-    // Dropdown Dynamic Handlers
-    document.getElementById('district').addEventListener('change', function() {
-        let dist = this.value;
-        let blockSelect = document.getElementById('block');
-        let gpSelect = document.getElementById('gp');
-
-        blockSelect.innerHTML = '<option value="">Select Block</option>';
-        gpSelect.innerHTML = '<option value="">Select Grampanchayat</option>';
-        gpSelect.disabled = true;
-
-        if (dist && masterData[dist]) {
-            document.getElementById('districtCode').value = masterData[dist].code || '';
-            blockSelect.disabled = false;
-            let blocks = masterData[dist].blocks;
-            for (let block in blocks) {
-                blockSelect.innerHTML += `<option value="${block}">${block}</option>`;
-            }
-        }
-    });
-
-    document.getElementById('block').addEventListener('change', function() {
-        let dist = document.getElementById('district').value;
-        let block = this.value;
-        let gpSelect = document.getElementById('gp');
-
-        gpSelect.innerHTML = '<option value="">Select Grampanchayat</option>';
-
-        if (dist && block && masterData[dist].blocks[block]) {
-            document.getElementById('blockCode').value = masterData[dist].blocks[block].code || '';
-            gpSelect.disabled = false;
-            let gps = masterData[dist].blocks[block].gps;
-            for (let gp in gps) {
-                gpSelect.innerHTML += `<option value="${gp}">${gp}</option>`;
-            }
-        }
-    });
-
-    document.getElementById('gp').addEventListener('change', function() {
-        let dist = document.getElementById('district').value;
-        let block = document.getElementById('block').value;
-        let gp = this.value;
-
-        if (dist && block && gp && masterData[dist].blocks[block].gps[gp]) {
-            document.getElementById('gpCode').value = masterData[dist].blocks[block].gps[gp] || '';
-        }
-    });
-
-    function setError(id, msg) {
-        let inputElem = document.getElementById(id);
-        let errElem = document.getElementById('err-' + id);
-        if (inputElem) inputElem.classList.add('invalid');
-        if (errElem) {
-            if (msg) errElem.innerText = msg;
-            errElem.style.display = 'block';
-        }
-    }
-
-    // FORM VALIDATION & SUBMIT
-    document.getElementById('dataForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        let isValid = true;
-
-        // Reset All Errors
-        document.querySelectorAll('.error-msg').forEach(e => e.style.display = 'none');
-        document.querySelectorAll('.invalid').forEach(e => e.classList.remove('invalid'));
-
-        let district = document.getElementById('district').value;
-        let block = document.getElementById('block').value;
-        let gp = document.getElementById('gp').value;
-        let cscId = document.getElementById('cscId').value.trim();
-        let vleName = document.getElementById('vleName').value.trim();
-        let mobile = document.getElementById('mobile').value.trim();
-        let email = document.getElementById('email').value.trim();
-        let farmersCount = document.getElementById('farmersCount').value.trim();
-
-        // 1. Dropdowns
-        if (!district) { setError('district'); isValid = false; }
-        if (!block) { setError('block'); isValid = false; }
-        if (!gp) { setError('gp'); isValid = false; }
-
-        // 2. CSC ID Check
-        let cscRegex = /^\d{8}001[1-9]$/;
-        if (!cscRegex.test(cscId)) {
-            setError('cscId', 'आपकी CSC ID गलत है');
-            isValid = false;
-        }
-
-        // 3. VLE Name Check
-        let nameRegex = /^[A-Za-z\s]+$/;
-        if (!vleName || !nameRegex.test(vleName)) {
-            setError('vleName', 'आपका VLE नाम गलत है');
-            isValid = false;
-        }
-
-        // 4. Mobile Check
-        let mobileRegex = /^[6-9]\d{9}$/;
-        if (!mobileRegex.test(mobile)) {
-            setError('mobile', 'आपका मोबाईल नंबर गलत है');
-            isValid = false;
-        }
-
-        // 5. Email Check
-        let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        if (!emailRegex.test(email)) {
-            setError('email', 'आपकी मेल आईडी गलत है');
-            isValid = false;
-        }
-
-        // 6. Farmers Count Check (10 - 200)
-        let countNum = parseInt(farmersCount, 10);
-        if (isNaN(countNum) || countNum < 10 || countNum > 200) {
-            setError('farmersCount', 'फार्मर की संख्या कम से कम 10 और अधिक 200 होनी चाहिए');
-            isValid = false;
-        }
-
-        if (!isValid) return;
-
-        // Submit Process
-        let btn = document.getElementById('submitBtn');
-        let msg = document.getElementById('message');
-
-        btn.disabled = true;
-        msg.style.backgroundColor = '#e7f1ff';
-        msg.style.color = '#0d6efd';
-        msg.innerText = "Submitting Data, Please Wait...";
-
-        let formData = new FormData(this);
-        fetch(SCRIPT_URL, { method: 'POST', body: formData })
-            .then(res => res.json())
-            .then(response => {
-                if (response.result === 'success') {
-                    msg.style.backgroundColor = '#d1e7dd';
-                    msg.style.color = '#0f5132';
-                    msg.innerText = "✓ Data Successfully Saved!";
-                    document.getElementById('dataForm').reset();
-                    document.getElementById('block').disabled = true;
-                    document.getElementById('gp').disabled = true;
-                } else {
-                    msg.style.backgroundColor = '#f8d7da';
-                    msg.style.color = '#842029';
-                    msg.innerText = "Error saving data. Please try again.";
-                }
-                btn.disabled = false;
-            })
-            .catch(error => {
-                msg.style.backgroundColor = '#f8d7da';
-                msg.style.color = '#842029';
-                msg.innerText = "Network Error! Check Internet Connection.";
-                btn.disabled = false;
-            });
-    });
-</script>
-
-</body>
-</html>
+            margin
