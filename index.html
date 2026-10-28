@@ -339,6 +339,32 @@
             padding: 10px;
             border-radius: 6px;
         }
+
+        /* THANK YOU MESSAGE STYLING */
+        .thankyou-box {
+            padding: 60px 25px;
+            text-align: center;
+            animation: modalFadeIn 0.4s ease-out;
+        }
+        .thankyou-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            color: #198754;
+        }
+        .thankyou-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #0d6efd;
+            margin: 0 0 10px 0;
+            line-height: 1.4;
+            text-transform: uppercase;
+        }
+        .thankyou-subtitle {
+            font-size: 15px;
+            color: #6c757d;
+            margin: 0;
+            font-weight: 500;
+        }
     </style>
 </head>
 <body>
@@ -353,7 +379,7 @@
     </div>
 </div>
 
-<div class="card">
+<div class="card" id="mainCard">
     <!-- FORM HEADER -->
     <div class="header">
         <h2>PM-KISAN UTSAV DIVAS</h2>
@@ -447,208 +473,4 @@
             <div class="form-group full-width">
                 <label>अनुमानित किसानों की संख्या (10-200) *</label>
                 <input type="number" id="farmersCount" name="farmersCount" placeholder="Enter Count (10 To 200)" required>
-                <div class="error-msg" id="err-farmersCount">फार्मर की संख्या कम से कम 10 और अधिक 200 होनी चाहिए</div>
-            </div>
-        </div>
-
-        <button type="submit" class="submit-btn" id="submitBtn">Submit Data</button>
-        <div id="message"></div>
-    </form>
-</div>
-
-<script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyY9wgDTwRsbAK4Hbhr4_Yq04JGekJLTYyCI3mDI_ObIb_LtFGrDhPZUAdOKYctn78kbg/exec"; // Apps Script Web App URL yahan lagayein
-
-    let masterData = {};
-
-    // Function to Close Welcome Modal
-    function closeWelcomeModal() {
-        document.getElementById('welcomeModal').style.display = 'none';
-    }
-
-    // Auto-uppercase VLE Name
-    document.getElementById('vleName').addEventListener('input', function() {
-        this.value = this.value.toUpperCase();
-    });
-
-    // Clear Inline Error on User Input
-    document.querySelectorAll('input, select').forEach(element => {
-        element.addEventListener('input', function() {
-            this.classList.remove('invalid');
-            let errDiv = document.getElementById('err-' + this.id);
-            if (errDiv) errDiv.style.display = 'none';
-        });
-    });
-
-    // Load Master Data Fast
-    window.onload = function() {
-        fetch(`${SCRIPT_URL}?action=getHierarchy`)
-            .then(res => res.json())
-            .then(data => {
-                masterData = data;
-                let distSelect = document.getElementById('district');
-                distSelect.innerHTML = '<option value="">Select District</option>';
-                for (let dist in data) {
-                    distSelect.innerHTML += `<option value="${dist}">${dist}</option>`;
-                }
-            })
-            .catch(err => {
-                console.error("Data load error:", err);
-            });
-    };
-
-    // Dropdown Dynamic Handlers
-    document.getElementById('district').addEventListener('change', function() {
-        let dist = this.value;
-        let blockSelect = document.getElementById('block');
-        let gpSelect = document.getElementById('gp');
-
-        blockSelect.innerHTML = '<option value="">Select Block</option>';
-        gpSelect.innerHTML = '<option value="">Select Grampanchayat</option>';
-        gpSelect.disabled = true;
-
-        if (dist && masterData[dist]) {
-            document.getElementById('districtCode').value = masterData[dist].code || '';
-            blockSelect.disabled = false;
-            let blocks = masterData[dist].blocks;
-            for (let block in blocks) {
-                blockSelect.innerHTML += `<option value="${block}">${block}</option>`;
-            }
-        }
-    });
-
-    document.getElementById('block').addEventListener('change', function() {
-        let dist = document.getElementById('district').value;
-        let block = this.value;
-        let gpSelect = document.getElementById('gp');
-
-        gpSelect.innerHTML = '<option value="">Select Grampanchayat</option>';
-
-        if (dist && block && masterData[dist].blocks[block]) {
-            document.getElementById('blockCode').value = masterData[dist].blocks[block].code || '';
-            gpSelect.disabled = false;
-            let gps = masterData[dist].blocks[block].gps;
-            for (let gp in gps) {
-                gpSelect.innerHTML += `<option value="${gp}">${gp}</option>`;
-            }
-        }
-    });
-
-    document.getElementById('gp').addEventListener('change', function() {
-        let dist = document.getElementById('district').value;
-        let block = document.getElementById('block').value;
-        let gp = this.value;
-
-        if (dist && block && gp && masterData[dist].blocks[block].gps[gp]) {
-            document.getElementById('gpCode').value = masterData[dist].blocks[block].gps[gp] || '';
-        }
-    });
-
-    function setError(id, msg) {
-        let inputElem = document.getElementById(id);
-        let errElem = document.getElementById('err-' + id);
-        if (inputElem) inputElem.classList.add('invalid');
-        if (errElem) {
-            if (msg) errElem.innerText = msg;
-            errElem.style.display = 'block';
-        }
-    }
-
-    // FORM VALIDATION & SUBMIT
-    document.getElementById('dataForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        let isValid = true;
-
-        // Reset All Errors
-        document.querySelectorAll('.error-msg').forEach(e => e.style.display = 'none');
-        document.querySelectorAll('.invalid').forEach(e => e.classList.remove('invalid'));
-
-        let district = document.getElementById('district').value;
-        let block = document.getElementById('block').value;
-        let gp = document.getElementById('gp').value;
-        let cscId = document.getElementById('cscId').value.trim();
-        let vleName = document.getElementById('vleName').value.trim();
-        let mobile = document.getElementById('mobile').value.trim();
-        let email = document.getElementById('email').value.trim();
-        let farmersCount = document.getElementById('farmersCount').value.trim();
-
-        // 1. Dropdowns
-        if (!district) { setError('district'); isValid = false; }
-        if (!block) { setError('block'); isValid = false; }
-        if (!gp) { setError('gp'); isValid = false; }
-
-        // 2. CSC ID Check (12 Digits, 9th & 10th = 00, 11th = 1, 12th = 0-9)
-let cscRegex = /^\d{8}001[0-9]$/;
-if (!cscRegex.test(cscId)) {
-    setError('cscId', 'आपकी CSC ID गलत है');
-    isValid = false;
-}
-
-        // 3. VLE Name Check
-        let nameRegex = /^[A-Za-z\s]+$/;
-        if (!vleName || !nameRegex.test(vleName)) {
-            setError('vleName', 'आपका VLE नाम गलत है');
-            isValid = false;
-        }
-
-        // 4. Mobile Check
-        let mobileRegex = /^[6-9]\d{9}$/;
-        if (!mobileRegex.test(mobile)) {
-            setError('mobile', 'आपका मोबाईल नंबर गलत है');
-            isValid = false;
-        }
-
-        // 5. Email Check
-        let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        if (!emailRegex.test(email)) {
-            setError('email', 'आपकी मेल आईडी गलत है');
-            isValid = false;
-        }
-
-        // 6. Farmers Count Check (10 - 200)
-        let countNum = parseInt(farmersCount, 10);
-        if (isNaN(countNum) || countNum < 10 || countNum > 200) {
-            setError('farmersCount', 'फार्मर की संख्या कम से कम 10 और अधिक 200 होनी चाहिए');
-            isValid = false;
-        }
-
-        if (!isValid) return;
-
-        // Submit Process
-        let btn = document.getElementById('submitBtn');
-        let msg = document.getElementById('message');
-
-        btn.disabled = true;
-        msg.style.backgroundColor = '#e7f1ff';
-        msg.style.color = '#0d6efd';
-        msg.innerText = "Submitting Data, Please Wait...";
-
-        let formData = new FormData(this);
-        fetch(SCRIPT_URL, { method: 'POST', body: formData })
-            .then(res => res.json())
-            .then(response => {
-                if (response.result === 'success') {
-                    msg.style.backgroundColor = '#d1e7dd';
-                    msg.style.color = '#0f5132';
-                    msg.innerText = "✓ Data Successfully Saved!";
-                    document.getElementById('dataForm').reset();
-                    document.getElementById('block').disabled = true;
-                    document.getElementById('gp').disabled = true;
-                } else {
-                    msg.style.backgroundColor = '#f8d7da';
-                    msg.style.color = '#842029';
-                    msg.innerText = "Error saving data. Please try again.";
-                }
-                btn.disabled = false;
-            })
-            .catch(error => {
-                msg.style.backgroundColor = '#f8d7da';
-                msg.style.color = '#842029';
-                msg.innerText = "Network Error! Check Internet Connection.";
-                btn.disabled = false;
-            });
-    });
-</script>
-
-</body>
-</html>
+                <div class="error-msg" id="err-farmersCount">फार्मर की संख्या कम से कम
